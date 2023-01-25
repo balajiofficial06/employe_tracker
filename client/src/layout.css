@@ -1,0 +1,104 @@
+.main {
+  padding: 20px;
+  height: 100vh;
+}
+
+.side-bar {
+  background-color: #b7b78a;
+  border-radius: 5px;
+  box-shadow: 0 0 2px gray;
+  margin: 0;
+  height: 100vh;
+  padding: 10px;
+  padding-bottom: 20px;
+  width: 225px;
+  float: left;
+}
+
+.ant-badge {
+  margin-right: 15px;
+}
+
+.collapsed-side-bar {
+  background-color: #b7b78a;
+  border-radius: 5px;
+  box-shadow: 0 0 2px gray;
+  margin: 0;
+  height: 100vh;
+  padding: 10px;
+  padding-bottom: 20px;
+  width: 50px;
+  float: left;
+}
+
+.content {
+  width: 90%;
+  height: 100%;
+  position: absolute;
+}
+
+.header {
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 0 2px gray;
+  margin-bottom: 20px;
+  height: 10vh;
+  padding-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 91.5%;
+}
+
+.body {
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 0 2px gray;
+  height: 90vh;
+  width: 90%;
+  padding: 5px;
+  padding-left: 15px;
+}
+
+.menu {
+  margin-top: 50px;
+}
+
+.menu-item {
+  margin-top: 30px;
+}
+
+.single-menu-item {
+  margin-top: 20px;
+}
+
+.menu-item a {
+  color: #ddddddd8;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.menu-item i {
+  color: #ddddddd8;
+  text-decoration: none;
+  font-size: 18px;
+  margin: 0 15px;
+}
+
+.active-menu-item {
+  background-color: #658864;
+  border-radius: 10px;
+}
+
+.header-action-icon {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.notification-profile {
+  padding-right: 15px;
+}
+
+.ri-notification-line {
+  padding-right: 5px;
+}

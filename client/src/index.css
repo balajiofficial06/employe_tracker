@@ -1,0 +1,33 @@
+.authentication-form {
+  padding: 20px;
+  background: #a0c3d2;
+}
+
+.authentication {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center !important;
+}
+
+.page-title {
+  font-size: 25px;
+  color: rgba(0, 0, 0, 0.555);
+  font-weight: bold;
+}
+
+.authentication .card-title {
+  font-size: 20px;
+  font-size: 20px;
+  margin-bottom: 0;
+  margin-left: -30px !important;
+  max-width: max-content;
+  border-bottom-left-radius: 5px;
+  background: #fbf1d3;
+}
+
+.anchor {
+  text-decoration: underline;
+  color: black;
+  font-size: 20px;
+}
