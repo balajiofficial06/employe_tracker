@@ -24,8 +24,8 @@ function Notification() {
               return (
                 <div>
                   <div
-                    className="card-text"
-                    onClick={() => navigate("/home")}
+                    className="card-title"
+                    onClick={() => navigate("/")}
                     key={index}
                   >
                     {notification.message}
@@ -33,6 +33,9 @@ function Notification() {
                 </div>
               );
             })}
+        </Tabs.TabPane>
+        <Tabs.TabPane tab="seen" key={1}>
+          <h2>seen</h2>
         </Tabs.TabPane>
       </Tabs>
     </Layout>
