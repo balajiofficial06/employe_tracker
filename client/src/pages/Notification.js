@@ -24,7 +24,7 @@ function Notification() {
               return (
                 <div>
                   <div
-                    className="card-title"
+                    className="notification-message"
                     onClick={() => navigate("/")}
                     key={index}
                   >

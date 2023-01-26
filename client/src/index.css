@@ -26,6 +26,19 @@
   background: #fbf1d3;
 }
 
+.notification-message {
+  padding: 5px;
+
+}
+
+.notification-message:hover {
+  cursor: pointer;
+  border: 2px solid;
+  width: 50%;
+  padding: 10px;
+  background-color: aliceblue;
+}
+
 .anchor {
   text-decoration: underline;
   color: black;
