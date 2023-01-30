@@ -111,4 +111,52 @@ router.post("/apply-manager-account", authMidlleware, async (req, res) => {
   }
 });
 
+router.post("/mark-all-notification-as-seen", authMidlleware, async (req, res) => {
+  try {
+
+    const user = await userModel.findById(req.body.userId)
+    const unSeenNotifications = user.unSeenNotifications;
+    const seenNotifications = user.seenNotifications;
+    seenNotifications.push(...unSeenNotifications)
+    user.unSeenNotifications = []
+    user.seenNotifications = seenNotifications
+    console.log(user.SeenNotifications)
+
+    const updatedUser = await user.save();
+    updatedUser.password = undefined;
+    res.status(200).send({
+      success: true,
+      message: "All notification marked as seen",
+      data: updatedUser
+    })
+
+  } catch (err) {
+    console.log(err);
+    return res
+      .status(500)
+      .send({ message: "somthing went wrong", success: false });
+  }
+});
+
+router.post("/delete-all-notification", authMidlleware, async (req, res) => {
+  try {
+
+    const user = await userModel.findById(req.body.userId)
+    user.unSeenNotifications = []
+    user.seenNotifications = []
+    const updatedUser = await user.save();
+    updatedUser.password = undefined;
+    res.status(200).send({
+      success: true,
+      message: "Deleted all the messages",
+      data: updatedUser
+    })
+
+  } catch (err) {
+    console.log(err);
+    return res
+      .status(500)
+      .send({ message: "somthing went wrong", success: false });
+  }
+});
 module.exports = router;

@@ -13,7 +13,6 @@ function ApplyManager() {
 
   const onFinish = async (values) => {
     try {
-      console.log(values);
       const response = await axios.post(
         "/api/user/apply-manager-account",
         {
