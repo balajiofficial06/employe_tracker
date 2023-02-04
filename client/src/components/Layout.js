@@ -7,7 +7,6 @@ import { Badge } from "antd";
 
 function Layout({ children }) {
   const { user } = useSelector((state) => state.user);
-  console.log(user.unSeenNotifications);
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
@@ -42,13 +41,13 @@ function Layout({ children }) {
     {
       number: 2,
       name: "Users",
-      path: "/users",
+      path: "/admin/userList",
       icon: "ri-user-2-line",
     },
     {
       number: 3,
       name: "Manager",
-      path: "/manager",
+      path: "/admin/managerList",
       icon: "ri-user-star-fill",
     },
     {
