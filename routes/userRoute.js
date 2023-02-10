@@ -5,6 +5,7 @@ const userModel = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 const authMidlleware = require("../middlewares/authMiddleware");
 const managerModel = require("../models/managerModel");
+const seatModel = require("../models/seatModel");
 
 router.post("/register", async (req, res) => {
   try {
@@ -159,4 +160,46 @@ router.post("/delete-all-notification", authMidlleware, async (req, res) => {
       .send({ message: "somthing went wrong", success: false });
   }
 });
+
+router.get("/block-seats", authMidlleware, async (req, res) => {
+  try {
+
+    const seats = await seatModel.find();
+
+    res.status(200).send({ message: "Seat details have fetched", success: true, data: seats })
+    //change it json format while sending the data
+
+  } catch (err) {
+    console.log(err);
+    return res
+      .status(500)
+      .send({ message: "somthing went wrong", success: false });
+  }
+});
+
+router.post("/bookSeat", authMidlleware, async (req, res) => {
+  try {
+    const seat = await seatModel.findById(req.body.id,)
+    if (seat.seatsAvailable != 0) {
+      const userDetails = {
+        name: req.body.user.name,
+        seatNumber: seat.numberOfSeats - seat.seatsAvailable
+      }
+      seat.seatsBookedDetails.push(userDetails)
+      await seat.save()
+
+      res.status(200).send({ message: "Seat Booked successfully", success: true, data: userDetails.seatNumber })
+    }
+    else {
+      res.status(200).send({ message: "Sloat is full", success: false })
+    }
+
+  } catch (err) {
+    console.log(err);
+    return res
+      .status(500)
+      .send({ message: "somthing went wrong", success: false });
+  }
+});
+
 module.exports = router;

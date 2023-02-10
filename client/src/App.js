@@ -11,6 +11,8 @@ import ApplyManager from "./pages/ApplyManager";
 import Notification from "./pages/Notification";
 import ManagersList from "./pages/admin/ManagersList";
 import UsersList from "./pages/admin/UsersList";
+import Profile from "./pages/manager/Profile";
+import BlockSeats from "./pages/user/BlockSeats";
 
 function App() {
   return (
@@ -71,6 +73,22 @@ function App() {
             element={
               <ProtectedRoute>
                 <UsersList />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/manager/profile/:managerId"
+            element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/block-seats"
+            element={
+              <ProtectedRoute>
+                <BlockSeats />
               </ProtectedRoute>
             }
           />

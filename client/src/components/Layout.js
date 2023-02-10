@@ -19,8 +19,8 @@ function Layout({ children }) {
     },
     {
       number: 2,
-      name: "Appointments",
-      path: "/appointments",
+      name: "Block seats",
+      path: "/block-seats",
       icon: "ri-calendar-2-line",
     },
     {
@@ -31,6 +31,27 @@ function Layout({ children }) {
     },
   ];
 
+  const ManagerMenu = [
+    {
+      number: 1,
+      name: "Home",
+      path: "/",
+      icon: "ri-home-line",
+    },
+    {
+      number: 2,
+      name: "Appointments",
+      path: "/appointments",
+      icon: "ri-calendar-2-line",
+    },
+    {
+      number: 3,
+      name: "profile",
+      path: `/manager/profile/${user._id !== undefined && user._id}`,
+      icon: "ri-profile-line"
+    },
+
+  ];
   const adminMenu = [
     {
       number: 1,
@@ -58,7 +79,7 @@ function Layout({ children }) {
     },
   ];
 
-  const renderMenu = user.isAdmin ? adminMenu : userMenu;
+  const renderMenu = user.isAdmin ? adminMenu : user.isManager ? ManagerMenu : userMenu;
   return (
     <div className="main">
       <div className="r-d layout">
