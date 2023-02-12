@@ -43,7 +43,6 @@ router.post("/change-manager-account-status", authMidlleware, async (req, res) =
         });
 
         const user = await userModel.findOne({ _id: manager.userId });
-        console.log(user)
         const unSeenNotifications = user.unSeenNotifications;
         unSeenNotifications.push({
             type: "new-manager-request",

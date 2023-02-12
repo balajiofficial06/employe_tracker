@@ -31,6 +31,10 @@ const userSchema = mongoose.Schema(
       type: Array,
       default: [],
     },
+    bookedSeat: {
+      type: Array,
+      default: []
+    }
   },
   {
     timestamps: true,

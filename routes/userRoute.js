@@ -187,6 +187,12 @@ router.post("/bookSeat", authMidlleware, async (req, res) => {
       }
       seat.seatsBookedDetails.push(userDetails)
       await seat.save()
+      const notification = {
+        type: "Seat-booking-confimation",
+        message: `Your seat confirmation number is ${seat.roomNumber} seat -${userDetails.seatNumber} LW`,
+        onclickPath: "/notificaiton",
+      }
+      const user = await userModel.updateOne({ _id: req.userId }, { $push: { bookedSeat: seat._id, unSeenNotifications: notification } })
 
       res.status(200).send({ message: "Seat Booked successfully", success: true, data: userDetails.seatNumber })
     }
