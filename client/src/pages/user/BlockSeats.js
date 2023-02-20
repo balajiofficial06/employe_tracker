@@ -52,6 +52,7 @@ function BlockSeats() {
                     }
                     return doc;
                 }))
+                window.location.reload();
 
             }
             else {

@@ -45,9 +45,7 @@ router.post("/change-manager-account-status", authMidlleware, async (req, res) =
         const user = await userModel.findOne({ _id: manager.userId });
         const unSeenNotifications = user.unSeenNotifications;
         unSeenNotifications.push({
-            type: "new-manager-request",
-            message: `Your manager account has been ${status}`,
-            onclickPath: "/notificaiton",
+
         });
         user.isManager = status === 'approved' ? true : false;
         await user.save();

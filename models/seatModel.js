@@ -26,6 +26,7 @@ const seatSchema = mongoose.Schema({
     },
 }, {
     timestamps: true,
+    expires: 86400,
 });
 
 
