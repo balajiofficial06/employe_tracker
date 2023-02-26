@@ -23,7 +23,6 @@ function Register() {
   return (
     <div className="authentication">
       <div className="authentication-form card">
-        <h1 className="card-title"> Hi how are you</h1>
         <Form layout="vertical" onFinish={onFinish}>
           <Form.Item label="Name" name="name">
             <Input placeholder="enter your name" />

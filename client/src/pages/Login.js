@@ -28,14 +28,15 @@ function Login() {
             <Input placeholder="enter your email" />
           </Form.Item>
 
-          <Form.Item label="passowrd" name="password">
-            <Input placeholder="Password" />
+          <Form.Item label="password" name="password">
+            <Input.Password placeholder="Password" autoComplete="off"/>
+          
           </Form.Item>
           <Button className="primary-button" htmlType="submit">
             LOGIN
           </Button>
           <br />
-          <a href="/register">click to register</a>
+          <a className="Register-Link" href="/register">click to register</a>
         </Form>
       </div>
     </div>

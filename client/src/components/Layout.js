@@ -40,13 +40,13 @@ function Layout({ children }) {
     },
     {
       number: 2,
-      name: "Appointments",
-      path: "/appointments",
+      name: "Block Seats",
+      path: "/block-seats",
       icon: "ri-calendar-2-line",
     },
     {
       number: 3,
-      name: "profile",
+      name: "Seat Allocation",
       path: `/manager/profile/${user._id !== undefined && user._id}`,
       icon: "ri-profile-line"
     },

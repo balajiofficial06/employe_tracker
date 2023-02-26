@@ -34,8 +34,13 @@ const userSchema = mongoose.Schema(
     bookedSeat: {
       type: Array,
       default: []
-    }
+    },
+    Tower: {
+      type: String,    
+    },
+
   },
+  
   {
     timestamps: true,
   }

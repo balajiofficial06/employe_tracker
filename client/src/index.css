@@ -1,6 +1,6 @@
 .authentication-form {
   padding: 20px;
-  background: #a0c3d2;
+  background: #aca0d2;
 }
 
 .authentication {
@@ -44,4 +44,7 @@
   color: black;
   font-size: 15px;
   cursor: pointer;
+}
+.Register-Link {
+  color: black;
 }

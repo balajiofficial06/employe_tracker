@@ -27,7 +27,7 @@ function ApplyManager() {
       );
       if (response.data.success) {
         toast.success(response.data.message);
-        toast("applyied for manager");
+        toast("applied for manager");
         navigate("/");
       } else {
         toast.error(response.data.message);
