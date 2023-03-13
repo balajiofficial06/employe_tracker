@@ -25,15 +25,15 @@ function Register() {
       <div className="authentication-form card">
         <Form layout="vertical" onFinish={onFinish}>
           <Form.Item label="Name" name="name">
-            <Input placeholder="enter your name" />
+            <Input placeholder="enter your name" autoComplete="off"/>
           </Form.Item>
 
           <Form.Item label="Email" name="email">
-            <Input placeholder="enter your email" />
+            <Input placeholder="enter your email" autoComplete="off"/>
           </Form.Item>
 
           <Form.Item label="passowrd" name="password">
-            <Input placeholder="Password" />
+            <Input.Password placeholder="Password" autoComplete="off"/>
           </Form.Item>
           <Button className="primary-button" htmlType="submit">
             REGISTER

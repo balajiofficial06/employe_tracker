@@ -25,7 +25,7 @@ function Login() {
       <div className="authentication-form card">
         <Form layout="vertical" onFinish={onFinish}>
           <Form.Item label="Email" name="email">
-            <Input placeholder="enter your email" />
+            <Input placeholder="enter your email" autoComplete="off" />
           </Form.Item>
 
           <Form.Item label="password" name="password">
