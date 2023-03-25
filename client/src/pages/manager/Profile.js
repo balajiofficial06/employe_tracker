@@ -44,8 +44,6 @@ function Profile() {
         setProtocol(value);
     };
     const handleSubmit = async () => {
-        console.log(selectedDate, selectedRoom, selectedSeats, protocol)
-
         try {
             const response = await axios.post(
                 "/api/manager/seat-allocation",
@@ -63,7 +61,6 @@ function Profile() {
             );
             if (response.data.success) {
                 toast.success(response.data.message);
-                toast("Seats have been allocated");
             } else {
                 toast.error(response.data.message);
             }

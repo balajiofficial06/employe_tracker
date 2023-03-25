@@ -87,7 +87,6 @@ router.post("/apply-manager-account", authMidlleware, async (req, res) => {
       if (err) return handleError(err);
       else return console.log("Result: ", res);
     });
-    console.log(newManager);
     const admin = await userModel.findOne({ isAdmin: true });
 
     const unSeenNotifications = admin.unSeenNotifications;
@@ -121,7 +120,6 @@ router.post("/mark-all-notification-as-seen", authMidlleware, async (req, res) =
     seenNotifications.push(...unSeenNotifications)
     user.unSeenNotifications = []
     user.seenNotifications = seenNotifications
-    console.log(user.SeenNotifications)
 
     const updatedUser = await user.save();
     updatedUser.password = undefined;
@@ -180,21 +178,58 @@ router.get("/block-seats", authMidlleware, async (req, res) => {
 router.post("/bookSeat", authMidlleware, async (req, res) => {
   try {
     const seat = await seatModel.findById(req.body.id,)
+    userId = req.body.user._id
     if (seat.seatsAvailable != 0) {
-      const userDetails = {
-        name: req.body.user.name,
-        seatNumber: seat.numberOfSeats - seat.seatsAvailable
-      }
-      seat.seatsBookedDetails.push(userDetails)
+      seat.seatsBookedDetails.push(userId)
+      seatNumber = seat.numberOfSeats - seat.seatsAvailable
       await seat.save()
       const notification = {
         type: "Seat-booking-confimation",
-        message: `Your seat confirmation number is ${seat.roomNumber} seat -${userDetails.seatNumber} LW`,
+        message: `Your seat confirmation number is ${seat.roomNumber} seat -${seatNumber} LW`,
         onclickPath: "/notificaiton",
       }
-      const user = await userModel.updateOne({ _id: req.userId }, { $push: { bookedSeat: seat._id, unSeenNotifications: notification } })
+      await userModel.updateOne({ _id: req.userId }, { $push: { bookedSeat: seat._id, unSeenNotifications: notification } })
 
-      res.status(200).send({ message: "Seat Booked successfully", success: true, data: userDetails.seatNumber })
+      const managerNotification = {
+        type: "Seat-booking-confimation",
+        message: `Your seat number ${seatNumber} on ${seat.roomNumber} is booked by ${req.body.user.name} `,
+        onclickPath: "/notificaiton",
+      }
+
+      const manager = await managerModel.findOne({ roomNumber: seat.roomNumber })
+      await userModel.findByIdAndUpdate(manager.userId, { $push: { unSeenNotifications: managerNotification } })
+
+      res.status(200).send({ message: "Seat Booked successfully", success: true, data: seatNumber })
+    }
+    else {
+      res.status(200).send({ message: "Sloat is full", success: false })
+    }
+
+  } catch (err) {
+    console.log(err);
+    return res
+      .status(500)
+      .send({ message: "somthing went wrong", success: false });
+  }
+});
+
+router.post("/cancel-seat", authMidlleware, async (req, res) => {
+  try {
+    const seat = await seatModel.findById(req.body.id,)
+    if (seat.seatsAvailable != seat.numberOfSeats) {
+      userId = req.body.user._id
+      indexOfUser = seat.seatsBookedDetails.indexOf(userId)
+      seat.seatsBookedDetails.splice(indexOfUser)
+      seat.seatsAvailable += 1
+      await seat.save()
+
+      const result = await userModel.updateOne(
+        { _id: req.userId },
+        { $pull: { bookedSeat: seat._id } }
+      );
+
+      res.status(200).send({ message: "your seat has been canceled", success: true })
+
     }
     else {
       res.status(200).send({ message: "Sloat is full", success: false })

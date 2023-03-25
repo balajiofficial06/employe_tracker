@@ -8,6 +8,7 @@ router.post("/seat-allocation", async (req, res) => {
     try {
         const seat = new seatModel(req.body)
         seat.save()
+        res.status(200).send({ message: "Seat allocated successfully", success: true })
     } catch (error) {
         res
             .status(500)
@@ -27,7 +28,7 @@ router.get("/managerDetails", authMidlleware, async (req, res) => {
         console.log(err);
         return res
             .status(500)
-            .send({ message: "somthing went wrong", success: false });
+            .send({ message: "somthing went wrongr", success: false });
     }
 });
 

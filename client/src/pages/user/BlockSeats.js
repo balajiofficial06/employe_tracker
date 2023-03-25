@@ -11,6 +11,7 @@ import { setUser } from "../../redux/userSlice";
 function BlockSeats() {
 
     const { user } = useSelector((state) => state.user);
+    console.log(user)
     const [seatId, setSeatId] = useState([...user?.bookedSeat || []])
     const [docs, setDocs] = useState([]);
     const getDocs = async () => {
@@ -29,6 +30,40 @@ function BlockSeats() {
             console.log(error)
         }
     }
+    const cancelBooking = async (value) => {
+        try {
+            console.log('cancel button is clicked', value)
+            const response = await axios.post("/api/user/cancel-seat", {
+                id: value,
+                user: user
+            }, {
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem("token"),
+                },
+            })
+
+            if (response.data.success) {
+
+                toast.success('Your seat has been canceled')
+
+                // setSeatId(prevVal => [...prevVal, value])
+                // console.log(seatId)
+                // setDocs(prevDocs => prevDocs.map(doc => {
+                //     if (doc._id === value) {
+                //         doc.seatsAvailable -= 1;
+                //     }
+                //     return doc;
+                // }))
+                window.location.reload();
+            }
+            else {
+                toast.error(response.data.message)
+            }
+        } catch (error) {
+            toast.error("can't fetch the user details")
+            console.log(error)
+        }
+    }
 
     const bookSeat = async (value) => {
         try {
@@ -44,14 +79,14 @@ function BlockSeats() {
             if (response.data.success) {
                 toast.success('Your seat has been booked')
 
-                setSeatId(prevVal => [...prevVal, value])
-                console.log(seatId)
-                setDocs(prevDocs => prevDocs.map(doc => {
-                    if (doc._id === value) {
-                        doc.seatsAvailable -= 1;
-                    }
-                    return doc;
-                }))
+                // setSeatId(prevVal => [...prevVal, value])
+                // console.log(seatId)
+                // setDocs(prevDocs => prevDocs.map(doc => {
+                //     if (doc._id === value) {
+                //         doc.seatsAvailable -= 1;
+                //     }
+                //     return doc;
+                // }))
                 window.location.reload();
 
             }
@@ -71,7 +106,8 @@ function BlockSeats() {
                     key={doc._id}
                     style={{ width: 300, margin: "16px" }}
                     actions={[
-                        <Button type="primary" disabled={user.bookedSeat?.includes(doc._id) || seatId.includes(doc._id)} onClick={() => { return bookSeat(doc._id) }}>Book</Button>
+                        <Button type="primary" disabled={user.bookedSeat?.includes(doc._id) || seatId.includes(doc._id)} onClick={() => { return bookSeat(doc._id) }}>Book</Button>,
+                        <Button type="primary" disabled={!user.bookedSeat?.includes(doc._id)} onClick={() => { return cancelBooking(doc._id) }}>Cancel</Button>
                     ]}
                 >
                     <Meta
