@@ -11,20 +11,20 @@ function Layout({ children }) {
   const location = useLocation();
   const navigate = useNavigate();
   const userMenu = [
+    // {
+    //   number: 1,
+    //   name: "Home",
+    //   path: "/",
+    //   icon: "ri-home-line",
+    // },
     {
       number: 1,
-      name: "Home",
-      path: "/",
-      icon: "ri-home-line",
-    },
-    {
-      number: 2,
       name: "Block seats",
       path: "/block-seats",
       icon: "ri-calendar-2-line",
     },
     {
-      number: 3,
+      number: 2,
       name: "Apply Manager",
       path: "/apply-manager",
       icon: "ri-hospital-line",
@@ -32,20 +32,20 @@ function Layout({ children }) {
   ];
 
   const ManagerMenu = [
+    // {
+    //   number: 1,
+    //   name: "Home",
+    //   path: "/",
+    //   icon: "ri-home-line",
+    // },
     {
       number: 1,
-      name: "Home",
-      path: "/",
-      icon: "ri-home-line",
-    },
-    {
-      number: 2,
       name: "Block Seats",
       path: "/block-seats",
       icon: "ri-calendar-2-line",
     },
     {
-      number: 3,
+      number: 2,
       name: "Seat Allocation",
       path: `/manager/profile/${user._id !== undefined && user._id}`,
       icon: "ri-profile-line"
@@ -53,26 +53,26 @@ function Layout({ children }) {
 
   ];
   const adminMenu = [
+    // {
+    //   number: 1,
+    //   name: "Home",
+    //   path: "/",
+    //   icon: "ri-home-line",
+    // },
     {
       number: 1,
-      name: "Home",
-      path: "/",
-      icon: "ri-home-line",
-    },
-    {
-      number: 2,
       name: "Users",
       path: "/admin/userList",
       icon: "ri-user-2-line",
     },
     {
-      number: 3,
+      number: 2,
       name: "Manager",
       path: "/admin/managerList",
       icon: "ri-user-star-fill",
     },
     {
-      number: 4,
+      number: 3,
       name: "Profile",
       path: "/profile",
       icon: "ri-profile-line",
