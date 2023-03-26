@@ -36,6 +36,7 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     const user = await userModel.findOne({ email: req.body.email });
+    console.log(user)
     if (!user) {
       res
         .status(200)
