@@ -7,59 +7,79 @@ import { Badge } from "antd";
 
 function Layout({ children }) {
   const { user } = useSelector((state) => state.user);
-  console.log(user.unSeenNotifications);
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const userMenu = [
+    // {
+    //   number: 1,
+    //   name: "Home",
+    //   path: "/",
+    //   icon: "ri-home-line",
+    // },
     {
       number: 1,
-      name: "Home",
-      path: "/",
-      icon: "ri-home-line",
-    },
-    {
-      number: 2,
-      name: "Appointments",
-      path: "/appointments",
+      name: "Block seats",
+      path: "/block-seats",
       icon: "ri-calendar-2-line",
     },
     {
-      number: 3,
+      number: 2,
       name: "Apply Manager",
       path: "/apply-manager",
       icon: "ri-hospital-line",
     },
   ];
 
-  const adminMenu = [
+  const ManagerMenu = [
+    // {
+    //   number: 1,
+    //   name: "Home",
+    //   path: "/",
+    //   icon: "ri-home-line",
+    // },
     {
       number: 1,
-      name: "Home",
-      path: "/",
-      icon: "ri-home-line",
+      name: "Block Seats",
+      path: "/block-seats",
+      icon: "ri-calendar-2-line",
     },
     {
       number: 2,
+      name: "Seat Allocation",
+      path: `/manager/profile/${user._id !== undefined && user._id}`,
+      icon: "ri-profile-line"
+    },
+
+  ];
+  const adminMenu = [
+    // {
+    //   number: 1,
+    //   name: "Home",
+    //   path: "/",
+    //   icon: "ri-home-line",
+    // },
+    {
+      number: 1,
       name: "Users",
-      path: "/users",
+      path: "/admin/userList",
       icon: "ri-user-2-line",
     },
     {
-      number: 3,
+      number: 2,
       name: "Manager",
-      path: "/manager",
+      path: "/admin/managerList",
       icon: "ri-user-star-fill",
     },
     {
-      number: 4,
+      number: 3,
       name: "Profile",
       path: "/profile",
       icon: "ri-profile-line",
     },
   ];
 
-  const renderMenu = user.isAdmin ? adminMenu : userMenu;
+  const renderMenu = user.isAdmin ? adminMenu : user.isManager ? ManagerMenu : userMenu;
   return (
     <div className="main">
       <div className="r-d layout">

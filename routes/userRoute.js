@@ -5,6 +5,7 @@ const userModel = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 const authMidlleware = require("../middlewares/authMiddleware");
 const managerModel = require("../models/managerModel");
+const seatModel = require("../models/seatModel");
 
 router.post("/register", async (req, res) => {
   try {
@@ -35,6 +36,7 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     const user = await userModel.findOne({ email: req.body.email });
+    console.log(user)
     if (!user) {
       res
         .status(200)
@@ -86,7 +88,6 @@ router.post("/apply-manager-account", authMidlleware, async (req, res) => {
       if (err) return handleError(err);
       else return console.log("Result: ", res);
     });
-    console.log(newManager);
     const admin = await userModel.findOne({ isAdmin: true });
 
     const unSeenNotifications = admin.unSeenNotifications;
@@ -103,6 +104,138 @@ router.post("/apply-manager-account", authMidlleware, async (req, res) => {
     res
       .status(200)
       .send({ message: "User is created successfully", success: true });
+  } catch (err) {
+    console.log(err);
+    return res
+      .status(500)
+      .send({ message: "somthing went wrong", success: false });
+  }
+});
+
+router.post("/mark-all-notification-as-seen", authMidlleware, async (req, res) => {
+  try {
+
+    const user = await userModel.findById(req.body.userId)
+    const unSeenNotifications = user.unSeenNotifications;
+    const seenNotifications = user.seenNotifications;
+    seenNotifications.push(...unSeenNotifications)
+    user.unSeenNotifications = []
+    user.seenNotifications = seenNotifications
+
+    const updatedUser = await user.save();
+    updatedUser.password = undefined;
+    res.status(200).send({
+      success: true,
+      message: "All notification marked as seen",
+      data: updatedUser
+    })
+
+  } catch (err) {
+    console.log(err);
+    return res
+      .status(500)
+      .send({ message: "somthing went wrong", success: false });
+  }
+});
+
+router.post("/delete-all-notification", authMidlleware, async (req, res) => {
+  try {
+
+    const user = await userModel.findById(req.body.userId)
+    user.unSeenNotifications = []
+    user.seenNotifications = []
+    const updatedUser = await user.save();
+    updatedUser.password = undefined;
+    res.status(200).send({
+      success: true,
+      message: "Deleted all the messages",
+      data: updatedUser
+    })
+
+  } catch (err) {
+    console.log(err);
+    return res
+      .status(500)
+      .send({ message: "somthing went wrong", success: false });
+  }
+});
+
+router.get("/block-seats", authMidlleware, async (req, res) => {
+  try {
+
+    const seats = await seatModel.find();
+
+    res.status(200).send({ message: "Seat details have fetched", success: true, data: seats })
+    //change it json format while sending the data
+
+  } catch (err) {
+    console.log(err);
+    return res
+      .status(500)
+      .send({ message: "somthing went wrong", success: false });
+  }
+});
+
+router.post("/bookSeat", authMidlleware, async (req, res) => {
+  try {
+    const seat = await seatModel.findById(req.body.id,)
+    userId = req.body.user._id
+    if (seat.seatsAvailable != 0) {
+      seat.seatsBookedDetails.push(userId)
+      seatNumber = seat.numberOfSeats - seat.seatsAvailable
+      await seat.save()
+      const notification = {
+        type: "Seat-booking-confimation",
+        message: `Your seat confirmation number is ${seat.roomNumber} seat -${seatNumber} LW`,
+        onclickPath: "/notificaiton",
+      }
+      await userModel.updateOne({ _id: req.userId }, { $push: { bookedSeat: seat._id, unSeenNotifications: notification } })
+
+      const managerNotification = {
+        type: "Seat-booking-confimation",
+        message: `Your seat number ${seatNumber} on ${seat.roomNumber} is booked by ${req.body.user.name} `,
+        onclickPath: "/notificaiton",
+      }
+
+      const manager = await managerModel.findOne({ roomNumber: seat.roomNumber })
+      await userModel.findByIdAndUpdate(manager.userId, { $push: { unSeenNotifications: managerNotification } })
+
+      res.status(200).send({ message: "Seat Booked successfully", success: true, data: seatNumber })
+    }
+    else {
+      res.status(200).send({ message: "Sloat is full", success: false })
+    }
+
+  } catch (err) {
+    console.log(err);
+    return res
+      .status(500)
+      .send({ message: "somthing went wrong", success: false });
+  }
+});
+
+router.post("/cancel-seat", authMidlleware, async (req, res) => {
+  try {
+    const seat = await seatModel.findById(req.body.id,)
+    if (seat.seatsAvailable != seat.numberOfSeats) {
+      userId = req.body.user._id
+      indexOfUser = seat.seatsBookedDetails.indexOf(userId)
+      seat.seatsBookedDetails.splice(indexOfUser)
+      seat.seatsAvailable += 1
+      await seat.save()
+
+      const result = await userModel.updateOne(
+        { _id: req.userId },
+        { $pull: { bookedSeat: seat._id } }
+      );
+
+      res.status(200).send({ message: "your seat has been canceled", success: true })
+
+    }
+    else {
+      res.status(200).send({ message: "Sloat is full", success: false })
+    }
+
   } catch (err) {
     console.log(err);
     return res

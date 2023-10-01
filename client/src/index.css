@@ -1,6 +1,6 @@
 .authentication-form {
   padding: 20px;
-  background: #a0c3d2;
+  background: #aca0d2;
 }
 
 .authentication {
@@ -26,8 +26,26 @@
   background: #fbf1d3;
 }
 
+.notification-message {
+  padding: 5px;
+
+}
+
+.notification-message:hover {
+  cursor: pointer;
+  border: 2px solid;
+  width: 50%;
+  padding: 10px;
+  background-color: aliceblue;
+}
+
 .anchor {
   text-decoration: underline;
   color: black;
-  font-size: 20px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.Register-Link {
+  color: black;
 }

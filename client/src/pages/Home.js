@@ -15,7 +15,7 @@ function Home() {
           },
         }
       );
-    } catch (error) {}
+    } catch (error) { }
   };
 
   useEffect(() => {
@@ -23,7 +23,7 @@ function Home() {
   });
   return (
     <Layout>
-      <p>homePage</p>
+      <p>Welcome</p>
     </Layout>
   );
 }

@@ -13,7 +13,6 @@ function ApplyManager() {
 
   const onFinish = async (values) => {
     try {
-      console.log(values);
       const response = await axios.post(
         "/api/user/apply-manager-account",
         {
@@ -28,7 +27,7 @@ function ApplyManager() {
       );
       if (response.data.success) {
         toast.success(response.data.message);
-        toast("applyied for manager");
+        toast("applied for manager");
         navigate("/");
       } else {
         toast.error(response.data.message);
